@@ -35,8 +35,10 @@ app.use('/api/users', userRoutes);
 app.use('/api', planificacionRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.get('*', (req, res, next) => {
-  if (req.path.startsWith('/api')) return next();
+app.use((req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ msg: 'Ruta no encontrada' });
+  }
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
