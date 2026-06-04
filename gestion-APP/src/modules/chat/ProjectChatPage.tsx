@@ -73,7 +73,11 @@ export const ProjectChatPage = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
-      setMensajes(data);
+      setMensajes(data.map((m: any) => ({
+        ...m,
+        _id: String(m._id ?? m.id),
+        usuario: { ...m.usuario, _id: String(m.usuario._id ?? m.usuario.id) },
+      })));
     };
     if (proyectoId && token) fetchMensajes();
   }, [proyectoId, token]);
