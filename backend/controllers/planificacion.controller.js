@@ -258,7 +258,10 @@ export const generarPlan = async (req, res) => {
             for (const e of tarea.etiquetas) await CardEtiqueta.create({ cardId: nuevaCard.id, nombre: e.nombre || '', color: e.color || '#000000' });
           }
           if (Array.isArray(tarea.checklist)) {
-            for (const c of tarea.checklist) await CardChecklist.create({ cardId: nuevaCard.id, nombre: c.nombre || '', completado: !!c.completado });
+            for (const c of tarea.checklist) {
+              const nombre = typeof c === 'string' ? c : (c.nombre || '');
+              await CardChecklist.create({ cardId: nuevaCard.id, nombre, completado: false });
+            }
           }
         }
         creadas.push(listaGuardada);

@@ -42,6 +42,7 @@ export const ProjectChatPage = () => {
   const { id: proyectoId } = useParams<{ id: string }>();
   const { usuario, token } = useAuth();
   const [mensajes, setMensajes] = useState<Mensaje[]>([]);
+  const [cargandoMensajes, setCargandoMensajes] = useState(true);
   const [nuevoMensaje, setNuevoMensaje] = useState('');
   const chatEndRef = useRef<HTMLDivElement | null>(null);
   const socketRef = useRef<Socket | null>(null);
@@ -69,15 +70,20 @@ export const ProjectChatPage = () => {
 
   useEffect(() => {
     const fetchMensajes = async () => {
-      const res = await fetch(`${API_BASE_URL}/messages/${proyectoId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const data = await res.json();
-      setMensajes(data.map((m: any) => ({
-        ...m,
-        _id: String(m._id ?? m.id),
-        usuario: { ...m.usuario, _id: String(m.usuario._id ?? m.usuario.id) },
-      })));
+      setCargandoMensajes(true);
+      try {
+        const res = await fetch(`${API_BASE_URL}/messages/${proyectoId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        setMensajes(data.map((m: any) => ({
+          ...m,
+          _id: String(m._id ?? m.id),
+          usuario: { ...m.usuario, _id: String(m.usuario._id ?? m.usuario.id) },
+        })));
+      } finally {
+        setCargandoMensajes(false);
+      }
     };
     if (proyectoId && token) fetchMensajes();
   }, [proyectoId, token]);
@@ -202,7 +208,18 @@ export const ProjectChatPage = () => {
                 bg-cover bg-center bg-no-repeat"
             >
               <AnimatePresence initial={false}>
-                {mensajes.length === 0 ? (
+                {cargandoMensajes ? (
+                  <div className="space-y-5">
+                    {[...Array(4)].map((_, i) => (
+                      <div key={i} className={`flex items-end gap-2.5 ${i % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
+                        {i % 2 === 0 && <div className="w-7 h-7 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse flex-shrink-0" />}
+                        <div className={`rounded-2xl animate-pulse ${i % 2 === 0 ? 'bg-gray-200 dark:bg-gray-700' : 'bg-indigo-200 dark:bg-indigo-900'}`}
+                          style={{ width: `${120 + (i * 37) % 100}px`, height: '38px' }} />
+                        {i % 2 !== 0 && <div className="w-7 h-7 rounded-full bg-indigo-200 dark:bg-indigo-900 animate-pulse flex-shrink-0" />}
+                      </div>
+                    ))}
+                  </div>
+                ) : mensajes.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-center py-20">
                     <span className="text-5xl mb-4">💬</span>
                     <p className="text-gray-400 dark:text-gray-500 text-sm">Nadie ha escrito todavía.<br />¡Sé el primero!</p>
