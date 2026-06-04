@@ -315,13 +315,12 @@ export const Sidebar: React.FC = () => {
         />
       )}
 
-      {/* Sidebar drawer en móvil, fijo en desktop */}
+      {/* Sidebar drawer en móvil, sticky en desktop */}
       <aside
         className={`
           fixed inset-y-0 left-0 z-50 transform transition-transform duration-300
-          md:static md:translate-x-0
+          md:sticky md:top-0 md:translate-x-0 md:self-start md:h-screen
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          md:translate-x-0
           w-64
         `}
       >

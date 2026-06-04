@@ -205,7 +205,7 @@ export const ProjectChatPage = () => {
                   </div>
                 ) : (
                   mensajes.map((msg) => {
-                    const esMio = msg.usuario._id === usuario!._id;
+                    const esMio = String(msg.usuario._id) === String(usuario!._id);
                     return (
                       <motion.div
                         key={msg._id}
