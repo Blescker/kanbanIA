@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PlanificadorIA from "../../components/PlanificadorIA";
 import { useQuery, useQueries, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../../context/ToastContext';
@@ -78,6 +78,15 @@ export const KanbanBoard = () => {
   const [nuevaDescripcion, setNuevaDescripcion] = useState('');
   const [listaAEliminar, setListaAEliminar] = useState<string | null>(null);
   const [mostrarIA, setMostrarIA] = useState(false);
+  const nuevaListaInputRef = useRef<HTMLInputElement>(null);
+
+  const enfocarFormNuevaLista = () => {
+    setMostrarIA(false);
+    setTimeout(() => {
+      nuevaListaInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      nuevaListaInputRef.current?.focus();
+    }, 50);
+  };
 
   const { mutate: editarCardMutate } = useEditarCard();
   const { mutate: eliminarCardMutate } = useEliminarCard();
@@ -244,7 +253,7 @@ export const KanbanBoard = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
-                    onClick={() => setMostrarIA(false)}
+                    onClick={enfocarFormNuevaLista}
                     className="inline-flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -324,6 +333,7 @@ export const KanbanBoard = () => {
             </DragDropContext>
 
             <FormularioNuevaLista
+              inputRef={nuevaListaInputRef}
               nuevaLista={nuevaLista}
               onCambiarNombre={setNuevaLista}
               onCrearLista={async (e) => {

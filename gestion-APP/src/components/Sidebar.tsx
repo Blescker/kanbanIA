@@ -106,7 +106,7 @@ export const Sidebar: React.FC = () => {
 
   // --- Sidebar content (drawer/fixed) ---
   const SidebarContent = (
-    <div className="flex flex-col h-full w-64 bg-white border-r dark:bg-gray-900 dark:border-gray-700">
+    <div className="flex flex-col h-screen w-64 bg-white border-r dark:bg-gray-900 dark:border-gray-700">
       <NavLink to="/dashboard" onClick={() => setSidebarOpen(false)} className="px-5 pt-6 pb-2 flex items-center gap-3">
         <img className="h-9 w-auto flex-shrink-0" src="/logo.png" alt="Logo" />
         <span className="font-bold text-sm leading-tight text-gray-800 dark:text-white">

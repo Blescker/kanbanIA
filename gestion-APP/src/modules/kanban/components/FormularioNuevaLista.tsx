@@ -4,18 +4,21 @@ interface FormularioNuevaListaProps {
   nuevaLista: string;
   onCambiarNombre: (nombre: string) => void;
   onCrearLista: (e: React.FormEvent) => void;
+  inputRef?: React.RefObject<HTMLInputElement | null>;
 }
 
 export const FormularioNuevaLista: React.FC<FormularioNuevaListaProps> = ({
   nuevaLista,
   onCambiarNombre,
   onCrearLista,
+  inputRef,
 }) => {
   return (
     <div className="mt-8 max-w-md mx-auto bg-white dark:bg-gray-800 p-4 rounded shadow">
       <h2 className="text-lg font-semibold mb-3 text-center">➕ Añadir nueva lista</h2>
       <form onSubmit={onCrearLista} className="flex gap-2">
         <input
+          ref={inputRef}
           type="text"
           placeholder="Nombre de la lista"
           value={nuevaLista}
