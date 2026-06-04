@@ -1,0 +1,47 @@
+# Entornos virtuales
+venv/
+.env/
+*.env
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Archivos de configuración o secretos
+*.env
+*.ini
+*.json
+*.yaml
+config.json
+settings.json
+*.pem
+*.key
+
+# Archivos de logs y bases de datos
+*.log
+*.sqlite3
+*.db
+
+# Archivos temporales
+*.swp
+*.bak
+*.tmp
+*.~ 
+.DS_Store
+Thumbs.db
+
+# Jupyter y notebooks (si usas)
+.ipynb_checkpoints/
+*.ipynb
+
+# VSCode
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Modelos y vectores generados
+*.pkl

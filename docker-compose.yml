@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend-dev
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - langchain
+    environment:
+      - NODE_ENV=development
+
+  langchain:
+    build:
+      context: ./langchain-api
+    container_name: langchain-api
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./langchain-api/.env
