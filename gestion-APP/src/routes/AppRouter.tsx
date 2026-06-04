@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { LoginPage } from '../modules/auth/LoginPage';
 import { RegisterPage } from '../modules/auth/RegisterPage';
@@ -28,6 +28,7 @@ const AnimatedRoutes = () => {
       className="bg-gray-50 dark:bg-gray-950"
     >
       <Routes location={location}>
+        <Route path="/"         element={<Navigate to="/login" replace />} />
         <Route path="/login"    element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
