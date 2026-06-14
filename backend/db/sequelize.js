@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 dotenv.config();
+dotenv.config({ path: '.env.production' });
 
 const sequelize = new Sequelize(
   process.env.DB_NAME || 'pgp_ia_db',

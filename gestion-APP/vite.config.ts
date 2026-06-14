@@ -4,7 +4,10 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  
+  build: {
+    outDir: '../backend/public',
+    emptyOutDir: true,
+  },
   plugins: [
     react(),
     tailwindcss(),

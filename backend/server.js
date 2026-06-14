@@ -20,6 +20,7 @@ import planificacionRoutes from './routes/planificacion.routes.js';
 import { syncDB, Message, ProjectMember, User } from './models/index.js';
 
 dotenv.config();
+dotenv.config({ path: '.env.production' });
 
 const app = express();
 app.use(cors({ origin: process.env.CORS_ORIGIN || 'http://localhost:5173' }));
@@ -114,6 +115,8 @@ syncDB()
     });
   })
   .catch((err) => {
-    console.error('❌ Error al conectar con MySQL:', err);
-    process.exit(1);
+    console.error('❌ Error al conectar con MySQL:', err.message);
+    server.listen(PORT, () => {
+      console.error(`⚠️  Servidor iniciado SIN base de datos en puerto ${PORT}`);
+    });
   });
