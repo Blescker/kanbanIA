@@ -41,9 +41,12 @@ const PlanificadorIA: React.FC<PlanificadorIAProps> = ({
 
       // Plan completo nuevo
       if (res.listas && res.listas.length > 0) {
+        const textoConfirmacion = res.estimacion
+          ? `🎉 ¡Listo! Tu planificación ha sido generada.\n\n${res.estimacion}`
+          : "🎉 ¡Listo! Tu planificación ha sido generada.";
         setConversacion((prev) => [
           ...prev,
-          { from: "ia", text: "🎉 ¡Listo! Tu planificación ha sido generada." },
+          { from: "ia", text: textoConfirmacion },
         ]);
         if (onPlanificacionCompletada) onPlanificacionCompletada();
       }

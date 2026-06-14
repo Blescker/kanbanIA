@@ -63,8 +63,10 @@ Para MODIFICACIONES al tablero existente, tu respuesta debe ser texto natural ex
   { "tipo": "agregar_etiqueta", "lista": "nombre lista", "titulo": "título card", "nombre": "etiqueta", "color": "#hex" }
 ]}
 
-Para CREAR UN PLAN COMPLETO (solo cuando el usuario confirme), responde ÚNICAMENTE con el JSON sin texto adicional:
+Para CREAR UN PLAN COMPLETO (solo cuando el usuario confirme), responde primero con el JSON y luego, en una línea separada, agrega una estimación de tiempo total para completar el plan usando este formato exacto:
 { "listas": [{ "nombre": "...", "tareas": [{ "titulo": "...", "descripcion": "...", "etiquetas": [...], "checklist": [...] }] }] }
+⏱️ Estimación total: X–Y días · [N tareas] · Ritmo sugerido: [descripción breve de cómo distribuir el trabajo]
+La estimación debe ser realista, basada en la cantidad y complejidad de las tareas del plan generado. No menciones el JSON ni el procesamiento interno.
 
 Para CONVERSACIÓN normal, responde solo en texto.
 `.trim();
@@ -266,7 +268,8 @@ export const generarPlan = async (req, res) => {
         }
         creadas.push(listaGuardada);
       }
-      return res.status(201).json({ msg: 'Planificación creada', listas: creadas });
+      const estimacion = mensajeIA.replace(/\{[\s\S]*\}/, '').trim();
+      return res.status(201).json({ msg: 'Planificación creada', listas: creadas, estimacion: estimacion || null });
     }
 
     // Caso 2: Operaciones sobre el tablero existente

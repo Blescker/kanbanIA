@@ -5,6 +5,7 @@ export interface PlanificacionResponse {
   listas?: any[];
   operaciones?: any[];
   resumen?: string;
+  estimacion?: string;
 }
 
 export const planificarProyecto = async (
